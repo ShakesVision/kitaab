@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="rtl">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>ePubViewer</title>
+    <title>کتاب</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
     <link rel="stylesheet" href="libs/normalize.min.css">
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css?family=Arbutus+Slab" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">    
+	<link href="./font/MehrNastaliqWeb.ttf" rel='stylesheet' />
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="description" content="ePubViewer is an powerful, modern, and easy-to-use web app for reading ebooks.">
@@ -25,7 +24,7 @@
             <div class="sidebar">
                 <div class="tab-list">
                     <a data-tab="toc" class="item">
-                        <i class="icon material-icons-outlined">list</i>
+                        <i class="icon material-icons-outlined">toc</i>
                     </a>
                     <a data-tab="search" class="item">
                         <i class="icon material-icons-outlined">search</i>
@@ -43,7 +42,7 @@
                     </div>
                     <div class="tab search" data-tab="search">
                         <div class="search-bar">
-                            <input type="text" autocomplete="off" placeholder="Search book..." class="search-box">
+                            <input type="text" autocomplete="off" placeholder="کتاب میں تلاش کریں..." class="search-box">
                             <button class="search-button">
                                 <i class="icon material-icons-outlined">search</i>
                             </button>
@@ -65,29 +64,29 @@
                     </div>
                     <div class="tab settings" data-tab="settings">
                         <div class="setting">
-                            <div class="setting-label">Themes</div>
+                            <div class="setting-label">تھیم</div>
                             <div class="setting-content theme chips" data-chips="theme">
-                                <div class="theme chip" style="background: #fff; color: #000;" data-default="true" data-value="#fff;#000">A</div>
-                                <div class="theme chip" style="background: #000; color: #fff;" data-value="#000;#fff">A</div>
-                                <div class="theme chip" style="background: #333; color: #eee;" data-value="#333;#eee">A</div>
-                                <div class="theme chip" style="background: #f5deb3; color: #000;" data-value="#f5deb3;#000">A</div>
-                                <div class="theme chip" style="background: #111; color: #f5deb3;" data-value="#111;#f5deb3">A</div>
-                                <div class="theme chip" style="background: #111b21; color: #e8e8e8;" data-value="#111b21;#e8e8e8">A</div>
+                                <div class="theme chip" style="background: #fff; color: #000;" data-default="true" data-value="#fff;#000">ت</div>
+                                <div class="theme chip" style="background: #000; color: #fff;" data-value="#000;#fff">ت</div>
+                                <div class="theme chip" style="background: #333; color: #eee;" data-value="#333;#eee">ت</div>
+                                <div class="theme chip" style="background: #f5deb3; color: #000;" data-value="#f5deb3;#000">ت</div>
+                                <div class="theme chip" style="background: #111; color: #f5deb3;" data-value="#111;#f5deb3">ت</div>
+                                <div class="theme chip" style="background: #111b21; color: #e8e8e8;" data-value="#111b21;#e8e8e8">ت</div>
                             </div>
                         </div>
                         <div class="setting">
-                            <div class="setting-label">Font</div>
+                            <div class="setting-label">فانٹ</div>
                             <div class="setting-content font chips" data-chips="font">
-                                <div class="font chip" style="font-family: 'Arial', Arimo, Liberation Sans, sans-serif;" data-value="'Arial', Arimo, Liberation Sans, sans-serif">Arial</div>
-                                <div class="font chip" style="font-family: 'Lato', sans-serif;" data-value="'Lato', sans-serif">Lato</div>
-                                <div class="font chip" style="font-family: 'Georgia', Liberation Serif, serif;" data-value="'Georgia', Liberation Serif, serif">Georgia</div>
+                                <div class="font chip" style="font-family: 'Mehr', 'Arial', Arimo, Liberation Sans, sans-serif;" data-value="'Mehr', 'Arial', Arimo, Liberation Sans, sans-serif">مہر نستعلیق</div>
+                                <div class="font chip" style="font-family: 'Saad','Mehr', sans-serif;" data-value="'Saad','Mehr', sans-serif">سعد نستعلیق</div>
+                                <div class="font chip" style="font-family: 'Noto Nastaliq Urdu Draft','Mehr', serif;" data-value="'Noto Nastaliq Urdu Draft','Mehr', serif">نوٹو نستعلیق</div>
+                                <div class="font chip" style="font-family: 'Emaad','Mehr','Noto Nastaliq Urdu Draft', Liberation Serif, serif;" data-value="'Emaad','Mehr','Noto Nastaliq Urdu Draft', Liberation Serif, serif">عماد نستعلیق</div>
                                 <div class="font chip" style="font-family: 'Times New Roman', Tinos, Liberation Serif, Times, serif;" data-value="'Times New Roman', Tinos, Liberation Serif, Times, serif"
-                                    data-default="true">Times New Roman</div>
-                                <div class="font chip" style="font-family: 'Arbutus Slab', serif;" data-value="'Arbutus Slab', serif">Arbutus Slab</div>
+                                    data-default="true">ٹائمز نیو رومن</div>
                             </div>
                         </div>
                         <div class="setting">
-                            <div class="setting-label">Font Size</div>
+                            <div class="setting-label">فانٹ سائز</div>
                             <div class="setting-content font-size chips" data-chips="font-size">
                                 <div class="size chip" style="font-size: 8pt" data-value="8pt">8</div>
                                 <div class="size chip" style="font-size: 9pt" data-value="9pt">9</div>
@@ -100,7 +99,7 @@
                             </div>
                         </div>
                         <div class="setting">
-                            <div class="setting-label">Line Spacing</div>
+                            <div class="setting-label">بین السطور فاصلہ</div>
                             <div class="setting-content line-spacing chips" data-chips="line-spacing">
                                 <div class="size chip" data-value="1">1</div>
                                 <div class="size chip" data-value="1.2">1.2</div>
@@ -114,7 +113,7 @@
                             </div>
                         </div>
                         <div class="setting">
-                            <div class="setting-label">Margin</div>
+                            <div class="setting-label">مارجن</div>
                             <div class="setting-content margin chips" data-chips="margin">
                                 <div class="size chip" data-value="0">0</div>
                                 <div class="size chip" data-value="1px">1px</div>
@@ -129,38 +128,38 @@
                             </div>
                         </div>
                         <div class="setting">
-                            <div class="setting-label">Progress Display</div>
+                            <div class="setting-label">پروگریس ڈسپلے</div>
                             <div class="setting-content progress chips" data-chips="progress">
-                                <div class="chip" data-value="location" data-default="true">Location</div>
-                                <div class="chip" data-value="percentage" data-default="true">Percentage</div>
-                                <div class="chip" data-value="chapter" data-default="true">Chapter</div>
-                                <div class="chip" data-value="bar" data-default="true">Bar</div>
-                                <div class="chip" data-value="none" data-default="true">None</div>
+                                <div class="chip" data-value="location" data-default="true">مقام</div>
+                                <div class="chip" data-value="percentage" data-default="true">فیصد</div>
+                                <div class="chip" data-value="chapter" data-default="true">باب</div>
+                                <div class="chip" data-value="bar" data-default="true">بار</div>
+                                <div class="chip" data-value="none" data-default="true">کچھ نہیں</div>
                             </div>
                         </div>
                         <div class="setting">
-                            <div class="setting-label">Fullscreen</div>
+                            <div class="setting-label">فل اسکرین</div>
                             <div class="setting-content">
-                                <a href="javascript:ePubViewer.doFullscreen();">Fullscreen</a>
+                                <a href="javascript:ePubViewer.doFullscreen();">فل اسکرین موڈ</a>
                             </div>
                         </div>
                         <div class="setting">
-                            <div class="setting-label">Reset</div>
+                            <div class="setting-label">ری سیٹ</div>
                             <div class="setting-content">
-                                <a href="javascript:void(0);" onclick="if(confirm('Are you sure?')){localStorage.clear();window.location.reload();}">Reset All</a>
+                                <a href="javascript:void(0);" onclick="if(confirm('Are you sure?')){localStorage.clear();window.location.reload();}">تمام ترتیبات ری سیٹ کریں</a>
                             </div>
                         </div>
                         <div class="setting">
-                            <div class="setting-label">About</div>
+                            <div class="setting-label">بارے میں</div>
                             <div class="setting-content">
-                                ePubViewer v3.1.0
-                                <br /> Copyright 2019
-                                <a href="https://pgaskin.net">Patrick Gaskin</a>
+                                ”کتاب“ - سر بکف گروپ کی پیشکش 
                                 <br />
-                                <a href="https://github.com/pgaskin/ePubViewer">Code</a> |
-                                <a href="https://github.com/pgaskin/ePubViewer/issues">Report an issue</a>
+                                رائٹ ٹو لیفٹ زبانوں کے لیے ای ریڈر                                
+                                ریپر اطراف ای پب ویور v3.1.0
+                                <br /> بشکریہ
+                                <a href="https://pgaskin.net">پیٹرک گاسکن</a>                                
                                 <br />
-                                <br /> This app requires Microsoft Edge 15+, Mozilla Firefox 50+, Chrome 50+, or Safari 10+.
+                                ڈیولپر: <a href="https://ur.shakeeb.in">شکیبؔ احمد</a>
                             </div>
                         </div>
                     </div>
@@ -174,9 +173,9 @@
             <div class="error-dump"></div>
         </div>
         <div class="bar">
-            <div class="left">
-                <button class="open">
-                    <i class="icon material-icons-outlined">open_in_browser</i>
+            <div class="right">
+                <button class="sidebar-button hidden" onclick="ePubViewer.doSidebar()">
+                    <i class="icon material-icons-outlined">menu</i>
                 </button>
             </div>
             <div class="title">
@@ -184,20 +183,19 @@
                 <span class="divider"> - </span>
                 <span class="book-author"></span>
             </div>
-            <div class="right">
-                <button class="sidebar-button hidden" onclick="ePubViewer.doSidebar()">
-                    <i class="icon material-icons-outlined">menu</i>
+			<div class="left">
+                <button class="open">
+                    <i class="icon material-icons-outlined">open_in_browser</i>
                 </button>
-            </div>
+            </div>            
         </div>
         <div class="book">
             <div class="empty-wrapper">
                 <div class="empty">
-                    <div class="app-name">ePubViewer</div>
+                    <div class="app-name">کتاب</div>
                     <div class="message">
-                        Unknown error. If this message does not disappear in a few seconds, try using a different browser (Chrome or Firefox), and
-                        if the issue still persists,
-                        <a href="https://github.com/pgaskin/ePubViewer">report it here</a>.
+                        وسائل لوڈ ہو رہے ہیں۔ اگر یہ میسج کچھ سیکنڈ میں غائب نہ ہوا تو اپنا براؤزر اپڈیٹ کیجیے۔ اگر مسئلہ برقرار رہا تو                         
+                        <a href="mailto:https://sarbakafgroup@gmail.com">یہاں رپورٹ کریں</a>۔
                     </div>
                 </div>
             </div>
@@ -205,13 +203,13 @@
         <div class="bar">
             <div class="left">
                 <button class="prev hidden">
-                    <i class="icon material-icons-outlined">chevron_left</i>
+                    <i class="icon material-icons-outlined">chevron_right</i>
                 </button>
             </div>
             <div class="loc"></div>
             <div class="right">
                 <button class="next hidden">
-                    <i class="icon material-icons-outlined">chevron_right</i>
+                    <i class="icon material-icons-outlined">chevron_left</i>
                 </button>
             </div>
         </div>

@@ -27,7 +27,7 @@ window.onerror = function (msg, url, line, column, err) {
     });
     try {
         if (!isRavenDisabled()) Raven.captureException(err);
-    } catch (err) {}
+    } catch (err) { }
 };
 
 let App = function (el) {
@@ -62,17 +62,17 @@ let App = function (el) {
         this.qs(".bar .loc").style.cursor = "pointer";
         this.qs(".bar .loc").addEventListener("click", event => {
             try {
-                let answer = prompt(`Location to go to (up to ${this.state.book.locations.length()})?`, this.state.rendition.currentLocation().start.location);
+                let answer = prompt(`کس صفحے پر جانا چاہتے ہیں؟ (کل: ${this.state.book.locations.length()}))`, this.state.rendition.currentLocation().start.location);
                 if (!answer) return;
                 answer = answer.trim();
                 if (answer == "") return;
 
                 let parsed = parseInt(answer, 10);
-                if (isNaN(parsed) || parsed < 0) throw new Error("Invalid location: not a positive integer");
+                if (isNaN(parsed) || parsed < 0) throw new Error("غلط صفحہ: آپ کا نمبر مثبت نہیں تھا!");
                 if (parsed > this.state.book.locations.length()) throw new Error("Invalid location");
 
                 let cfi = this.state.book.locations.cfiFromLocation(parsed);
-                if (cfi === -1) throw new Error("Invalid location");
+                if (cfi === -1) throw new Error("غلط صفحہ درج کیا گیا۔");
 
                 this.state.rendition.display(cfi);
             } catch (err) {
@@ -211,7 +211,7 @@ App.prototype.fatal = function (msg, err, usersFault) {
     });
     try {
         if (!isRavenDisabled()) if (!usersFault) Raven.captureException(err);
-    } catch (err) {}
+    } catch (err) { }
 };
 
 App.prototype.doReset = function () {
@@ -236,7 +236,7 @@ App.prototype.doReset = function () {
     this.qs(".info .series-index").innerHTML = "";
     this.qs(".info .author").innerHTML = "";
     this.qs(".info .description").innerHTML = "";
-    this.qs(".book").innerHTML = '<div class="empty-wrapper"><div class="empty"><div class="app-name">ePubViewer</div><div class="message"><a href="javascript:ePubViewer.doOpenBook();" class="big-button">Open a Book</a></div></div></div>';
+    this.qs(".book").innerHTML = '<div class="empty-wrapper"><div class="empty"><div class="app-name">کتاب</div><div class="message"><a href="javascript:ePubViewer.doOpenBook();" class="big-button">کتاب کھولیں</a></div></div></div>';
     this.qs(".sidebar-button").classList.add("hidden");
     this.qs(".bar button.prev").classList.add("hidden");
     this.qs(".bar button.next").classList.add("hidden");
@@ -284,7 +284,7 @@ App.prototype.onTocItemClick = function (href, event) {
     event.preventDefault();
 };
 
-App.prototype.getNavItem = function(loc, ignoreHash) {
+App.prototype.getNavItem = function (loc, ignoreHash) {
     return (function flatten(arr) {
         return [].concat(...arr.map(v => [v, ...flatten(v.subitems)]));
     })(this.state.book.navigation.toc).filter(
@@ -303,7 +303,7 @@ App.prototype.onNavigationLoaded = function (nav) {
             let a = toc.appendChild(this.el("a", "item"));
             a.href = item.href;
             a.dataset.href = item.href;
-            a.innerHTML = `${"&nbsp;".repeat(indent*4)}${item.label.trim()}`;
+            a.innerHTML = `${"&nbsp;".repeat(indent * 4)}${item.label.trim()}`;
             a.addEventListener("click", this.onTocItemClick.bind(this, item.href));
             handleItems(item.subitems, indent + 1);
         });
@@ -312,7 +312,7 @@ App.prototype.onNavigationLoaded = function (nav) {
 };
 
 App.prototype.onRenditionRelocated = function (event) {
-    try {this.doDictionary(null);} catch (err) {}
+    try { this.doDictionary(null); } catch (err) { }
     try {
         let navItem = this.getNavItem(event, false) || this.getNavItem(event, true);
         this.qsa(".toc-list .item").forEach(el => el.classList[(navItem && el.dataset.href == navItem.href) ? "add" : "remove"]("active"));
@@ -349,10 +349,10 @@ App.prototype.onBookCoverLoaded = function (url) {
 App.prototype.onKeyUp = function (event) {
     let kc = event.keyCode || event.which;
     let b = null;
-    if (kc == 37) {
+    if (kc == 39) {
         this.state.rendition.prev();
         b = this.qs(".app .bar button.prev");
-    } else if (kc == 39) {
+    } else if (kc == 37) {
         this.state.rendition.next();
         b = this.qs(".app .bar button.next");
     }
@@ -368,7 +368,7 @@ App.prototype.onRenditionClick = function (event) {
         if (event.target.parentNode.tagName.toLowerCase() == "a" && event.target.parentNode.href) return;
         if (window.getSelection().toString().length !== 0) return;
         if (this.state.rendition.manager.getContents()[0].window.getSelection().toString().length !== 0) return;
-    } catch (err) {}
+    } catch (err) { }
 
     let wrapper = this.state.rendition.manager.container;
     let third = wrapper.clientWidth / 3;
@@ -377,11 +377,11 @@ App.prototype.onRenditionClick = function (event) {
     if (x > wrapper.clientWidth - 20) {
         event.preventDefault();
         this.doSidebar();
-    } else if (x < third) {
+    } else if (x > third) {
         event.preventDefault();
         this.state.rendition.prev();
         b = this.qs(".bar button.prev");
-    } else if (x > (third * 2)) {
+    } else if (x < (third * 2)) {
         event.preventDefault();
         this.state.rendition.next();
         b = this.qs(".bar button.next");
@@ -462,21 +462,37 @@ App.prototype.applyTheme = function () {
         this.ael.style.background = theme.bg;
         this.ael.style.fontFamily = theme.ff;
         this.ael.style.color = theme.fg;
-        if(this.state.rendition) this.state.rendition.getContents().forEach(c => c.addStylesheetRules(rules));
+        if (this.state.rendition) this.state.rendition.getContents().forEach(c => c.addStylesheetRules(rules));
     } catch (err) {
         console.error("error applying theme", err);
     }
 };
 
-App.prototype.loadFonts = function() {
+App.prototype.loadFonts = function () {
+    //"https://cdn.jsdelivr.net/gh/shakesvision/MehrNastaleeq/font.css",
+    //https://fonts.googleapis.com/css2?family=Changa:wght@200&display=swap
+    
     this.state.rendition.getContents().forEach(c => {
         [
-            "https://fonts.googleapis.com/css?family=Arbutus+Slab",
-            "https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i"
+            "https://fonts.googleapis.com/earlyaccess/notonastaliqurdudraft.css",
+            "https://cdn.jsdelivr.net/gh/ShakesVision/EmaadNastaleeq/font.css",
+            "https://cdn.jsdelivr.net/gh/shakesvision/SaadNastaleeq/font.css"
         ].forEach(url => {
             let el = c.document.body.appendChild(c.document.createElement("link"));
             el.setAttribute("rel", "stylesheet");
             el.setAttribute("href", url);
+        });
+        var junction_font = new FontFace('Mehr', 'url(font/MehrNastaliqWeb.ttf)');
+        console.log(junction_font);
+        junction_font.load().then(function (loaded_face) {
+            c.document.fonts.add(loaded_face);
+            c.document.body.style.fontFamily = '"Mehr", Arial';
+        }).catch(function (error) {
+            // error occurred
+            throw error;
+        });
+        c.document.querySelectorAll("head > link").forEach(l=>{
+          if(l.getAttribute('href').startsWith('blob:null')) l.remove();
         });
     });
 };
@@ -486,7 +502,7 @@ App.prototype.onRenditionRelocatedUpdateIndicators = function (event) {
         if (this.getChipActive("progress") == "bar") {
             // TODO: don't recreate every time the location changes.
             this.qs(".bar .loc").innerHTML = "";
-            
+
             let bar = this.qs(".bar .loc").appendChild(document.createElement("div"));
             bar.style.position = "relative";
             bar.style.width = "60vw";
@@ -541,12 +557,12 @@ App.prototype.onRenditionRelocatedUpdateIndicators = function (event) {
         if (this.getChipActive("progress") == "none") {
             stxt = "";
         } else if (this.getChipActive("progress") == "location" && event.start.location > 0) {
-            stxt = `Loc ${event.start.location}/${this.state.book.locations.length()}`
+            stxt = `صفحہ ${event.start.location}/${this.state.book.locations.length()}`
         } else if (this.getChipActive("progress") == "chapter") {
             let navItem = this.getNavItem(event, false) || this.getNavItem(event, true);
             stxt = navItem ? navItem.label.trim() : (event.start.percentage > 0 && event.start.percentage < 1) ? `${Math.round(event.start.percentage * 100)}%` : "";
         } else {
-            stxt = (event.start.percentage > 0 && event.start.percentage < 1) ? `${Math.round(event.start.percentage * 1000)/10}%` : "";
+            stxt = (event.start.percentage > 0 && event.start.percentage < 1) ? `${Math.round(event.start.percentage * 1000) / 10}%` : "";
         }
         this.qs(".bar .loc").innerHTML = stxt;
     } catch (err) {
@@ -580,9 +596,9 @@ App.prototype.checkDictionary = function () {
             try {
                 let newSelection = this.state.rendition.manager.getContents()[0].window.getSelection().toString().trim();
                 if (newSelection == selection) this.doDictionary(newSelection);
-            } catch (err) {console.error(`showDictTimeout: ${err.toString()}`)}
+            } catch (err) { console.error(`showDictTimeout: ${err.toString()}`) }
         }, 300);
-    } catch (err) {console.error(`checkDictionary: ${err.toString()}`)}
+    } catch (err) { console.error(`checkDictionary: ${err.toString()}`) }
 };
 
 App.prototype.doDictionary = function (word) {
@@ -608,39 +624,39 @@ App.prototype.doDictionary = function (word) {
     let meaningsEl = definitionEl.appendChild(document.createElement("div"));
     meaningsEl.classList.add("meanings");
     meaningsEl.innerHTML = "Loading";
-
-    fetch(`https://dict.geek1011.net/word/${encodeURIComponent(word)}`).then(resp => {
-        if (resp.status >= 500) throw new Error(`Dictionary not available`);
+    //https://dict.geek1011.net/word/
+    fetch(`https://secure-ocean-95470.herokuapp.com/https://dicapi.herokuapp.com/api/dic2?method=briefMeaning&lang=ur&word=${encodeURIComponent(word)}`).then(resp => {
+        if (resp.status >= 500) throw new Error(`لغت موجود نہیں`);
         return resp.json();
     }).then(obj => {
         if (obj.status == "error") throw new Error(`ApiError: ${obj.result}`);
         return obj.result;
     }).then(word => {
-        console.log("dictLookup", word);
+        console.log("dictLookup", word.data);
         meaningsEl.innerHTML = "";
-        wordEl.innerText = [word.word].concat(word.alternates || []).join(", ").toLowerCase();
-        
+        wordEl.innerText = word.w;
+
         if (word.info && word.info.trim() != "") {
             let infoEl = meaningsEl.appendChild(document.createElement("div"));
             infoEl.classList.add("info");
-            infoEl.innerText = word.info;
+            infoEl.innerText = word.m;
         }
-        
-        (word.meanings || []).map((meaning, i) => {
+
+        (word.data || []).map((data, i) => {
             let meaningEl = meaningsEl.appendChild(document.createElement("div"));
             meaningEl.classList.add("meaning");
 
             let meaningTextEl = meaningEl.appendChild(document.createElement("div"));
             meaningTextEl.classList.add("text");
-            meaningTextEl.innerText = `${i + 1}. ${meaning.text}`;
+            meaningTextEl.innerText = `${i + 1}. ${data.m}`;
 
-            if (meaning.example && meaning.example.trim() != "") {
+            if (data.slug) {
                 let meaningExampleEl = meaningEl.appendChild(document.createElement("div"));
                 meaningExampleEl.classList.add("example");
-                meaningExampleEl.innerText = meaning.example;
+                meaningExampleEl.innerText = data.slug;
             }
         });
-        
+
         if (word.credit && word.credit.trim() != "") {
             let creditEl = meaningsEl.appendChild(document.createElement("div"));
             creditEl.classList.add("credit");
@@ -650,15 +666,15 @@ App.prototype.doDictionary = function (word) {
         try {
             console.error("dictLookup", err);
             if (err.toString().toLowerCase().indexOf("not in dictionary") > -1) {
-                meaningsEl.innerHTML = "Word not in dictionary.";
+                meaningsEl.innerHTML = "لفظ لغت میں موجود نہیں!";
                 return;
             }
             if (err.toString().toLowerCase().indexOf("not available") > -1 || err.toString().indexOf("networkerror") > -1 || err.toString().indexOf("failed to fetch") > -1) {
-                meaningsEl.innerHTML = "Dictionary not available.";
+                meaningsEl.innerHTML = "لغت موجود نہیں۔.";
                 return;
             }
-            meaningsEl.innerHTML = `Dictionary not available: ${err.toString()}`;
-        } catch (err) {}
+            meaningsEl.innerHTML = `لغت موجود نہیں: ${err.toString()}`;
+        } catch (err) { }
     });
 };
 
@@ -703,7 +719,7 @@ App.prototype.doTab = function (tab) {
         this.qsa(".tab-container .tab").forEach(el => el.classList[(el.dataset.tab != tab) ? "add" : "remove"]("hidden"));
         try {
             this.qs(".tab-container").scrollTop = 0;
-        } catch (err) {}
+        } catch (err) { }
     } catch (err) {
         this.fatal("error showing tab", err);
     }
@@ -728,7 +744,7 @@ App.prototype.onSearchClick = function (event) {
             let textEl = resultEl.appendChild(this.el("div", "text"));
             textEl.innerText = result.excerpt.trim();
 
-            resultEl.appendChild(this.el("div", "pbar")).appendChild(this.el("div", "pbar-inner")).style.width = (this.state.book.locations.percentageFromCfi(result.cfi)*100).toFixed(3) + "%";
+            resultEl.appendChild(this.el("div", "pbar")).appendChild(this.el("div", "pbar-inner")).style.width = (this.state.book.locations.percentageFromCfi(result.cfi) * 100).toFixed(3) + "%";
         });
         this.qs(".app .sidebar .search-results").appendChild(resultsEl);
     }).catch(err => this.fatal("error searching book", err));
@@ -765,5 +781,5 @@ try {
     });
     try {
         if (!isRavenDisabled) Raven.captureException(err);
-    } catch (err) {}
+    } catch (err) { }
 }
